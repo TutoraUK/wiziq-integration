@@ -44,6 +44,14 @@ class ClassroomApi implements ClassroomApiInterface
     /**
      * {@inheritdoc}
      */
+    public function viewSchedule($classroomId)
+    {
+        $this->gateway->sendRequest(new Request\ViewSchedule($classroomId));
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
     public function createPermaClas(PermaClassroom $classroom)
     {
         $response = $this->gateway->sendRequest(new Request\CreatePermaClass($classroom));
