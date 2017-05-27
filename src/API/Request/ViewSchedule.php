@@ -28,7 +28,7 @@ class ViewSchedule implements RequestInterface
     public function getParams()
     {
         return [
-            'class_id' => $this->classroomId
+            'class_master_id' => $this->classroomId
         ];
     }
 }
