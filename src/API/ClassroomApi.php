@@ -48,7 +48,7 @@ class ClassroomApi implements ClassroomApiInterface
     {
         $this->gateway->sendRequest(new Request\ViewSchedule($classroomId));
     }
-    
+
     /**
      * {@inheritdoc}
      */
