@@ -42,7 +42,7 @@ class Gateway
         $params = $this->auth->preparePayload($wiziqRequest->getMethod(), $wiziqRequest->getParams());
 
         $rawResponse = $this->client->getResponse($url, $params);
-        $xmlObject   = simplexml_load_string($rawResponse);
+        $xmlObject   = simplexml_load_string($rawResponse, 'SimpleXMLElement', LIBXML_NOCDATA);
         $response    = new Response($xmlObject);
 
         if (!$response->isSuccess()) {
