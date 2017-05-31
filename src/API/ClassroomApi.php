@@ -61,16 +61,17 @@ class ClassroomApi implements ClassroomApiInterface
         $presenter = $response->presenter_list->presenter;
 
         return [
-            'class_id'      => (int)    $response->class_id,
-            'class_title'   => (string) $response->class_title,
-            'is_permanent'  => (string) $response->attributes()['perma_class'],
-            'start_time'    => (string) $response->start_time,
-            'duration'      => (int)    $response->duration,
-            'class_status'  => (string) $response->class_status,
-            'recording_url' => (string) $response->recording_url,
-            'presenter'     => [
-                'presenter_id'  => (string) $presenter->presenter_id,
-                'presenter_url' => (string) $presenter->presenter_url
+            'class_id'          => (int)    $response->class_id,
+            'class_master_id'   => (int)    $classMasterId,
+            'class_title'       => (string) $response->class_title,
+            'is_permanent'      => (string) $response->attributes()['perma_class'],
+            'start_time'        => (string) $response->start_time,
+            'duration'          => (int)    $response->duration,
+            'class_status'      => (string) $response->class_status,
+            'recording_url'     => (string) $response->recording_url,
+            'presenter'         => [
+                'presenter_id'      => (string) $presenter->presenter_id,
+                'presenter_url'     => (string) $presenter->presenter_url
             ]
         ];
 
