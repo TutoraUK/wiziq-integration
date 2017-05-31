@@ -9,7 +9,9 @@ use mikemix\Wiziq\Entity\PermaClassroom;
 
 class ClassroomApi implements ClassroomApiInterface
 {
-    /** @var Gateway */
+    /**
+     * @var Gateway
+     */
     protected $gateway;
 
     public function __construct(Gateway $requester)
@@ -18,7 +20,10 @@ class ClassroomApi implements ClassroomApiInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Create a class.
+     *
+     * @param Classroom $classroom
+     * @return array
      */
     public function create(Classroom $classroom)
     {
@@ -27,6 +32,7 @@ class ClassroomApi implements ClassroomApiInterface
 
         return [
             'class_id'        => (int)$response->class_id,
+            'class_master_id' => (int)$response->class_master_id,
             'recording_url'   => (string)$response->recording_url,
             'presenter_email' => (string)$response->presenter_list[0]->presenter[0]->presenter_email,
             'presenter_url'   => (string)$response->presenter_list[0]->presenter[0]->presenter_url,
@@ -34,7 +40,9 @@ class ClassroomApi implements ClassroomApiInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Cancel a class.
+     *
+     * @param int $classroomId
      */
     public function cancel($classroomId)
     {
@@ -42,11 +50,14 @@ class ClassroomApi implements ClassroomApiInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get the information about scheduled class.
+     *
+     * @param $classMasterId
+     * @return array
      */
-    public function viewSchedule($classroomId)
+    public function viewSchedule($classMasterId)
     {
-        $response = $this->gateway->sendRequest(new Request\ViewSchedule($classroomId))->view_schedule->recurring_list->class_details;
+        $response = $this->gateway->sendRequest(new Request\ViewSchedule($classMasterId))->view_schedule->recurring_list->class_details;
         $presenter = $response->presenter_list->presenter;
 
         return [
