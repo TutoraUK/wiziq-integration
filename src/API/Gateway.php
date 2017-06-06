@@ -51,4 +51,30 @@ class Gateway
 
         return $response->getResponse();
     }
+
+    /**
+     * A method to run the arbitrary requests.
+     *
+     * @param $methodName
+     * @param $params
+     * @return \SimpleXMLElement
+     * @throws CallException If Wiziq declined the request
+     */
+    public function sendRawRequest($methodName, $params)
+    {
+        $url = sprintf('%s?method=%s', $this->endpointUrl, $methodName);
+        $params = $this->auth->preparePayload($methodName, $params);
+
+        $rawResponse = $this->client->getResponse($url, $params);
+
+        $xmlObject   = simplexml_load_string($rawResponse, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+        $response    = new Response($xmlObject);
+
+        if (!$response->isSuccess()) {
+            throw CallException::from($response);
+        }
+
+        return $response->getResponse();
+    }
 }

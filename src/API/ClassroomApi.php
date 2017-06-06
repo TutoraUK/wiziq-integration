@@ -50,6 +50,60 @@ class ClassroomApi implements ClassroomApiInterface
     }
 
     /**
+     * Get class data.
+     *
+     * @param $classroomId
+     * @param $parameters
+     * @return array
+     */
+    public function getData($classId, $parameters)
+    {
+        $response = $this->gateway->sendRequest(new Request\GetData($classId, $parameters))->get_data;
+
+        $record = $response->record_list->record;
+        $children = $record->children();
+
+        $record_array = [];
+        foreach ($children as $elem) {
+            $record_array[$elem->getName()] = ((string)$record->{$elem->getName()});
+        }
+
+        return $record_array;
+    }
+
+    /**
+     * Get attendance report by class_id.
+     *
+     * @param $classId
+     * @return array
+     */
+    public function getAttendanceReport($classId)
+    {
+        $report = $this->gateway->sendRequest(new Request\GetAttendanceReport($classId))->get_attendance_report;
+
+        $attendees = $report->attendee_list->attendee;
+
+        $attendees_array = [];
+        foreach ($attendees as $attendee)
+        {
+            $attendees_array[] = [
+                'is_presenter'  => strlen(trim((string) $attendee->attributes()['presenter'])) > 0,
+                'attendee_id'   => (int) $attendee->attendee_id,
+                'screen_name'   => (string) $attendee->screen_name,
+                'entry_time'    => (string) $attendee->entry_time,
+                'exit_time'     => (string) $attendee->exit_time,
+                'attended_minutes' => (int) $attendee->attended_minutes
+            ];
+        }
+
+        return [
+            'class_id'          => (string) $report->class_id,
+            'class_duration'    => (int) $report->class_duration,
+            'attendees'         => $attendees_array
+        ];
+    }
+
+    /**
      * Get the information about scheduled class.
      *
      * @param $classMasterId
