@@ -72,6 +72,27 @@ class ClassroomApi implements ClassroomApiInterface
     }
 
     /**
+     * Count the classes by their statuses.
+     *
+     * @return array
+     */
+    public function countClassesByStatus()
+    {
+        $response = $this->gateway->sendRawRequest('get_data', ['columns' => 'status'])->get_data;
+        $records = $response->record_list[0];
+
+        $total = [];
+
+        foreach ($records as $record)
+        {
+            $status = trim((string)$record->status);
+            $total[$status] = (isset($total[$status]) ? $total[$status]+1 : 1);
+        }
+
+        return $total;
+    }
+
+    /**
      * Get attendance report by class_id.
      *
      * @param $classId
@@ -117,16 +138,15 @@ class ClassroomApi implements ClassroomApiInterface
         return [
             'class_id'          => (int)    $response->class_id,
             'class_master_id'   => (int)    $classMasterId,
-            'class_title'       => (string) $response->class_title,
-            'is_permanent'      => (string) $response->attributes()['perma_class'],
+            'title'             => (string) $response->class_title,
+            //'is_permanent'      => (string) $response->attributes()['perma_class'],
             'start_time'        => (string) $response->start_time,
             'duration'          => (int)    $response->duration,
-            'class_status'      => (string) $response->class_status,
+            'status'            => (string) $response->class_status,
             'recording_url'     => (string) $response->recording_url,
-            'presenter'         => [
-                'presenter_id'      => (string) $presenter->presenter_id,
-                'presenter_url'     => (string) $presenter->presenter_url
-            ]
+            'presenter_id'      => (string) $presenter->presenter_id,
+            'presenter_url'     => (string) $presenter->presenter_url,
+            'presenter_email'   => (string) $presenter->presenter_email
         ];
 
     }
