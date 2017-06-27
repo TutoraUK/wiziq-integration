@@ -40,6 +40,20 @@ class ClassroomApi implements ClassroomApiInterface
     }
 
     /**
+     * Edit an existing classroom.
+     *
+     * @param $classroom
+     * @return bool
+     */
+    public function modify($classroom)
+    {
+        $response = $this->gateway->sendRequest(new Request\Modify($classroom))->modify[0];
+        $status = (string)$response->attributes()['status'];
+
+        return filter_var($status, FILTER_VALIDATE_BOOLEAN);
+    }
+
+    /**
      * Cancel a class.
      *
      * @param int $classroomId

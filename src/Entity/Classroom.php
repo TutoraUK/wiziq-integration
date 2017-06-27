@@ -81,6 +81,7 @@ class Classroom
     public function toArray()
     {
         $params = [
+            'class_id'                   => $this->class_id,
             'title'                      => $this->title,
             'start_time'                 => $this->startTime,
             'language_culture_name'      => $this->languageCultureName,
