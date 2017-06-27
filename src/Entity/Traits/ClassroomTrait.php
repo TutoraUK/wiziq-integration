@@ -52,7 +52,7 @@ trait ClassroomTrait
     public function withStartTime($start_time)
     {
         $self = clone $this;
-        $self->start_time = (string)$start_time;
+        $self->startTime = (string)$start_time;
         return $self;
     }
 
