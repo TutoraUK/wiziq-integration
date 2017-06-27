@@ -24,6 +24,28 @@ trait ClassroomTrait
     }
 
     /**
+     * @param $id
+     * @return ClassroomTrait
+     */
+    public function withClassId($id)
+    {
+        $self = clone $this;
+        $self->class_id = (string)$id;
+        return $self;
+    }
+
+    /**
+     * @param $id
+     * @return ClassroomTrait
+     */
+    public function withClassMasterId($id)
+    {
+        $self = clone $this;
+        $self->class_master_id = (string)$id;
+        return $self;
+    }
+
+    /**
      * @param string $value
      * @return self
      */
