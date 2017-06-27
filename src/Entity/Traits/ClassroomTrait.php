@@ -46,6 +46,17 @@ trait ClassroomTrait
     }
 
     /**
+     * @param $start_time
+     * @return ClassroomTrait
+     */
+    public function withStarttime($start_time)
+    {
+        $self = clone $this;
+        $self->start_time = $start_time;
+        return $self;
+    }
+
+    /**
      * @param string $value
      * @return self
      */
