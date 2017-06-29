@@ -81,7 +81,7 @@ class Classroom
     public function toArray()
     {
         $params = [
-            'class_id'                   => $this->class_id,
+            'class_id'                   => isset($this->class_id) ? $this->class_id : null,
             'title'                      => $this->title,
             'start_time'                 => $this->startTime,
             'language_culture_name'      => $this->languageCultureName,
@@ -104,5 +104,16 @@ class Classroom
         }
 
         return $params;
+    }
+
+    /**
+     * Universal getter.
+     *
+     * @param $parameter
+     * @return null
+     */
+    public function get($parameter)
+    {
+        return isset($this->{$parameter}) ? $this->{$parameter} : null;
     }
 }
