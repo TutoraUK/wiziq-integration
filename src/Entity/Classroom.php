@@ -82,6 +82,7 @@ class Classroom
     {
         $params = [
             'class_id'                   => isset($this->class_id) ? $this->class_id : null,
+            'class_master_id'            => $this->classMasterId,
             'title'                      => $this->title,
             'start_time'                 => $this->startTime,
             'language_culture_name'      => $this->languageCultureName,

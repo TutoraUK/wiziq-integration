@@ -4,6 +4,7 @@ namespace mikemix\Wiziq\Entity\Traits;
 trait ClassroomTrait
 {
     private $title;
+    private $classMasterId;
     private $presenterEmail;
     private $presenterId;
     private $presenterName;
@@ -41,7 +42,7 @@ trait ClassroomTrait
     public function withClassMasterId($id)
     {
         $self = clone $this;
-        $self->class_master_id = (string)$id;
+        $self->classMasterId = (string)$id;
         return $self;
     }
 
